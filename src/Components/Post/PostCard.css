@@ -1,0 +1,27 @@
+.dropdown{
+    position:relative;
+    display: inline-block;
+    ;
+}
+
+.dots{
+    display: inline-block;
+    cursor: pointer;
+}
+.dropdown-content {
+    position: absolute;
+    z-index: 1;
+}
+.dropdown-content a {
+
+    padding: 8px 16px;
+    text-decoration: none;
+    display: block;
+}
+.commentInput{
+    border:none;
+    outline:none;
+    width: 100%;
+    padding: 0.5rem .7rem;
+   
+}

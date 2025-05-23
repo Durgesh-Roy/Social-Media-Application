@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import name from '../../assets/name.png';
-import { IoReorderThree } from "react-icons/io5";
+import { IoReorderThreeOutline } from "react-icons/io5";
 import menu from './SidebarConfig';
 import { useNavigate } from 'react-router-dom';
 const Sidebar = () => {
@@ -22,7 +22,7 @@ const Sidebar = () => {
         <div className='pt-10 '>
             <img className='w-40' 
             src={name}
-             alt="Instagram Logo" 
+             alt="" 
              />
         </div>
         <div className='mt-10'>
@@ -38,7 +38,7 @@ const Sidebar = () => {
       </div>
       </div>
         <div className='flex items-center cursor-pointer pb-10'>
-         <IoReorderThree className='text-2xl'/>
+         <IoReorderThreeOutline className='text-2xl'/>
          <p className='ml-5'>More</p>
         </div>
        </div>

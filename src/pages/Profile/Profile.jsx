@@ -1,5 +1,7 @@
 import React from 'react'
 import ProfileUserDetails from '../../Components/ProfileComponents/ProfileUserDetails';
+import ReqUserPostPart from '../../Components/ProfileComponents/ReqUserPostPart';
+import ReqUserPostCard from '../../Components/ProfileComponents/ReqUserPostCard';
 
 const Profile = () => {
   return (
@@ -7,7 +9,12 @@ const Profile = () => {
         <div className=''>
             <ProfileUserDetails />
         </div>
-      
+      <div>
+        <ReqUserPostPart/>
+      </div>
+      <div>
+        <ReqUserPostCard />
+      </div>
     </div>
   )
 }

@@ -36,3 +36,7 @@
     transform: rotate(360deg);
   }
 }
+/* App.css or global styles */
+.chakra-modal__overlay {
+  z-index: 999 !important;
+}

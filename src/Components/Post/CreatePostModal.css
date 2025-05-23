@@ -1,0 +1,15 @@
+.drag-drop {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding:2rem;
+  font-size:1.72rem;
+  color:#999;
+  border-radius:5px;
+  cursor:pointer;;
+}
+
+.drag-drop.hover {
+    margin: 0 0 1rem;
+}
