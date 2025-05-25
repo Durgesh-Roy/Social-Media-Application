@@ -1,10 +1,11 @@
-import React from 'react';
-import StoryCircle from '../../Components/ProfileComponents/Story/StoryCircle';
+import React, { useEffect } from 'react';
+import StoryCircle from '../../Components/Story/StoryCircle';
 import HomeRight from '../../Components/HomeRight/HomeRight';
 import PostCard from '../../Components/Post/PostCard';
 import CreatePostModal from '../../Components/Post/CreatePostModal';
 
 const Homepage = () => {
+ 
   return (
     <div>
       <div className='mt-10 flex w-[100%] justify-center'>
@@ -16,11 +17,11 @@ const Homepage = () => {
             {[1,1,1,1].map((item) => <PostCard/>)}
           </div>
         </div>
-        <div className='w-[35%]'>
+        <div className='w-[25%]'>
           <HomeRight/>
         </div>
       </div>
-      <CreatePostModal/>
+      <CreatePostModal />
     </div>
   )
 }

@@ -1,17 +1,32 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import name from '../../assets/name.png';
 import { IoReorderThreeOutline } from "react-icons/io5";
 import menu from './SidebarConfig';
 import { useNavigate } from 'react-router-dom';
+import CreatePostModal from '../Post/CreatePostModal';
+import { useDisclosure } from '@chakra-ui/react';
 const Sidebar = () => {
   const [activeTab, setActiveTab] = useState();
   const navigate = useNavigate();
+   const{isOpen,onOpen,onClose}=useDisclosure();
+   // 🛠 Reset body overflow after modal closes
+    useEffect(() => {
+        if (!isOpen) {
+            setTimeout(() => {
+                document.body.style.overflow = 'auto'
+            }, 300)
+        } else {
+            document.body.style.overflow = 'hidden'
+        }
+    }, [isOpen])
   const handleTabClick = (title) => {
     setActiveTab(title);
     if (title === "Profile") {
       navigate('/username');
     } else if (title === "Home") {
       navigate('/');
+    }else if(title==="Create"){
+      onOpen();
     }
   }
 
@@ -42,6 +57,13 @@ const Sidebar = () => {
          <p className='ml-5'>More</p>
         </div>
        </div>
+      
+               {isOpen && <CreatePostModal
+               onClose={onClose}
+               isOpen={isOpen}
+               onOpen={onOpen}
+               />
+}
       </div>
       
   );

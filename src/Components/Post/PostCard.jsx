@@ -12,7 +12,6 @@ const PostCard = () => {
     const [isPostLiked, setIsPostLiked] = useState(false)
     const [isSaved, setIsSaved] = useState(false)
     const { isOpen, onOpen, onClose } = useDisclosure()
-
     const handleSavePost = () => setIsSaved(!isSaved)
     const handlePostLike = () => setIsPostLiked(!isPostLiked)
     const handleClick = () => setShowDropdown(!showDropdown)
