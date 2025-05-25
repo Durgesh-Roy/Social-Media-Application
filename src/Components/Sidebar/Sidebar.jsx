@@ -5,8 +5,11 @@ import menu from './SidebarConfig';
 import { useNavigate } from 'react-router-dom';
 import CreatePostModal from '../Post/CreatePostModal';
 import { useDisclosure } from '@chakra-ui/react';
+import SearchComponents from '../SearchComponents/SearchComponents';
 const Sidebar = () => {
-  const [activeTab, setActiveTab] = useState();
+  const [isSearchVisible,setIsSearchVisible]=useState(false);
+
+  const [activeTab, setActiveTab] = useState("");
   const navigate = useNavigate();
    const{isOpen,onOpen,onClose}=useDisclosure();
    // 🛠 Reset body overflow after modal closes
@@ -28,18 +31,23 @@ const Sidebar = () => {
     }else if(title==="Create"){
       onOpen();
     }
+     if(title==="Search"){
+      setIsSearchVisible(true);
+    }else{
+      setIsSearchVisible(false);
+    }
   }
 
   return (
-    <div className='sticky top-0 h-[100vh]'>
-        <div className='flex flex-col justify-between h-full px-10'>
-      <div>
-        <div className='pt-10 '>
+    <div className='sticky top-0 h-[100vh] flex'>
+        <div className={`flex flex-col justify-between h-full ${activeTab==="Search"?"px-2":"px-15"}`}>
+       <div>
+        {activeTab!=="Search" &&<div className='pt-10 '>
             <img className='w-40' 
             src={name}
              alt="" 
              />
-        </div>
+        </div>}
         <div className='mt-10'>
             {menu.map((item)=>(
               <div 
@@ -47,7 +55,7 @@ const Sidebar = () => {
               className="flex items-center mb-5 cursor-pointer text-lg"
               >
             {activeTab === item.title ? item.activeIcon :item.icon}
-            <p className={`${activeTab===item.title? "font-bold":"font-semibold"}`}>{item.title}</p>
+           {activeTab!=="Search" && <p className={`${activeTab===item.title? "font-bold":"font-semibold"}`}>{item.title}</p>}
             </div>
         ))}
       </div>
@@ -58,12 +66,14 @@ const Sidebar = () => {
         </div>
        </div>
       
-               {isOpen && <CreatePostModal
-               onClose={onClose}
-               isOpen={isOpen}
-               onOpen={onOpen}
-               />
-}
+        {isOpen && <CreatePostModal
+        onClose={onClose}
+        isOpen={isOpen}
+        onOpen={onOpen}
+        />
+        }
+        {isSearchVisible&& <SearchComponents/> }
+
       </div>
       
   );
