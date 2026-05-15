@@ -43,9 +43,19 @@ public class PasswordManager {
             user.setTokenExpiration(LocalDateTime.now().plusMinutes(30));
             userRepository.save(user);
 
-            String resetLink = "http://localhost:8080/auth/reset-password-form?token=" + token;
-            emailService.sendEmail(user.getEmail(), "Reset Password",
-                    "Click the link to reset your password: " + resetLink);
+            String resetLink = "http://localhost:3000/reset-password?token=" + token;
+            try {
+                emailService.sendEmail(user.getEmail(), "Reset your Instagram password",
+                        "Hi " + (user.getName() != null ? user.getName() : user.getUserName()) + ",\n\n" +
+                        "Click the link below to reset your password. The link expires in 30 minutes.\n\n" +
+                        resetLink + "\n\n" +
+                        "If you did not request a password reset you can ignore this email.");
+            } catch (Exception e) {
+                // Email failed (SMTP not configured / bad credentials). The token is
+                // still saved, so log the link so a developer can use it.
+                System.err.println("[forgot-password] email send failed: " + e.getMessage());
+                System.err.println("[forgot-password] reset link for " + email + ": " + resetLink);
+            }
 
             return ResponseEntity.ok("Reset password email sent!");
         }

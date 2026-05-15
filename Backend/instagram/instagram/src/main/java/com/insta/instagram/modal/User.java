@@ -19,8 +19,10 @@ public class User {
     private String email;
     private String mobile;
     private String website;
+    @Column(columnDefinition = "LONGTEXT")
     private String bio;
     private String gender;
+    @Column(columnDefinition = "LONGTEXT")
     private String image;
     private String password;
     @ElementCollection
