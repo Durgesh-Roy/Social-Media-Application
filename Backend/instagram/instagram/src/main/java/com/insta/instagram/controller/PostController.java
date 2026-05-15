@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -41,6 +42,16 @@ public class PostController {
 
         List<Post>posts=postService.findAllPostsByUserIds(userIds);
         return new ResponseEntity<List<Post>>(posts,HttpStatus.OK);
+    }
+
+    @GetMapping("/feed")
+    public ResponseEntity<List<Post>> getFeedHandler(@RequestHeader("Authorization") String token) throws UserException, PostException {
+        User me = userService.findUserProfile(token);
+        List<Integer> ids = new ArrayList<>(me.getFollowing());
+        ids.add(me.getId());
+        List<Post> posts = postService.findAllPostsByUserIds(ids);
+        System.out.println(posts+ " " + me.getId());
+        return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 
     @GetMapping("/{postId}")

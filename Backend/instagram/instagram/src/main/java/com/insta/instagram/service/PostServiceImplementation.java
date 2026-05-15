@@ -74,21 +74,15 @@ public class PostServiceImplementation implements PostService {
 
     @Override
     public List<Post> findPostsByUserId(Integer userId) throws PostException, UserException {
-        List<Post> posts=postRepository.findByUserId(userId);
-        if(posts.size()==0){
-            throw new UserException("this user does not have any post");
-        }
-
-        return posts;
+        return postRepository.findByUserId(userId);
     }
 
     @Override
     public List<Post> findAllPostsByUserIds(List<Integer> userIds) throws PostException {
-        List<Post> allPosts = postRepository.findByUserIdIn(userIds);
-        if (allPosts.isEmpty()) {
-            throw new PostException("No posts found for the given users.");
+        if (userIds == null || userIds.isEmpty()) {
+            return java.util.Collections.emptyList();
         }
-        return allPosts;
+        return postRepository.findByUserIdIn(userIds);
     }
 
 
@@ -104,41 +98,44 @@ public class PostServiceImplementation implements PostService {
     }
     @Override
     public String unSavePost(Integer postId, Integer userId) throws PostException, UserException {
-        return null;
+        User user = userService.findUserById(userId);
+        Post post = findPostById(postId);
+        user.getSavedPost().removeIf(p -> p.getId().equals(post.getId()));
+        userRepository.save(user);
+        return "unsaved successfully";
     }
 
     @Override
     public Post likePost(Integer postId, Integer userId) throws UserException, PostException {
-        Post post=findPostById(postId);
-        User user=userService.findUserById(userId);
+        Post post = findPostById(postId);
+        User user = userService.findUserById(userId);
 
-        UserDto userDto=new UserDto();
-
-        userDto.setEmail(user.getEmail());
-        userDto.setId(user.getId());
-        userDto.setName(user.getName());
-        userDto.setUserImage(user.getImage());
-        userDto.setUsername(user.getUserName());
-
-        post.getLikedByUsers().add(userDto);
+        // Dedupe by user id, not by full UserDto equality. If this user has
+        // already liked the post we leave the set unchanged so the like count
+        // never double-counts.
+        boolean alreadyLiked = post.getLikedByUsers().stream()
+                .anyMatch(u -> u.getId() != null && u.getId().equals(user.getId()));
+        if (!alreadyLiked) {
+            UserDto userDto = new UserDto();
+            userDto.setEmail(user.getEmail());
+            userDto.setId(user.getId());
+            userDto.setName(user.getName());
+            userDto.setUserImage(user.getImage());
+            userDto.setUsername(user.getUserName());
+            post.getLikedByUsers().add(userDto);
+        }
 
         return postRepository.save(post);
     }
 
     @Override
     public Post unLikePost(Integer postId, Integer userId) throws UserException, PostException {
-        Post post=findPostById(postId);
-        User user=userService.findUserById(userId);
+        Post post = findPostById(postId);
+        User user = userService.findUserById(userId);
 
-        UserDto userDto=new UserDto();
-
-        userDto.setEmail(user.getEmail());
-        userDto.setId(user.getId());
-        userDto.setName(user.getName());
-        userDto.setUserImage(user.getImage());
-        userDto.setUsername(user.getUserName());
-
-        post.getLikedByUsers().remove(userDto);
+        // Remove by user id — stale UserDto fields would otherwise prevent the
+        // remove() call from matching the stored entry.
+        post.getLikedByUsers().removeIf(u -> u.getId() != null && u.getId().equals(user.getId()));
 
         return postRepository.save(post);
     }

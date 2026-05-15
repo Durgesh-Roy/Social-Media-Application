@@ -1,0 +1,16 @@
+.captionInput {
+  width: 100%;
+  outline: none;
+  resize: none;
+  font-size: 0.875rem;
+  border: none;
+  background: transparent;
+  line-height: 1.4;
+}
+
+.locationInput {
+  border: none;
+  outline: none;
+  width: 100%;
+  background: transparent;
+}

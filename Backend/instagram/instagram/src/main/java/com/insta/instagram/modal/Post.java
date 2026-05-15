@@ -15,7 +15,9 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+    @Column(columnDefinition = "LONGTEXT")
     private String caption;
+    @Column(columnDefinition = "LONGTEXT")
     private String image;
     private String location;
     private LocalDateTime createdAt;
