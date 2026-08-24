@@ -2,7 +2,7 @@ package com.insta.instagram.controller;
 
 import com.insta.instagram.exceptions.UserException;
 import com.insta.instagram.modal.User;
-import com.insta.instagram.repository.UserRepository;
+import com.insta.instagram.repository.jpa.UserRepository;
 import com.insta.instagram.response.MessageResponse;
 import com.insta.instagram.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
 package com.insta.instagram.service;
 
-import com.insta.instagram.repository.UserRepository;
+import com.insta.instagram.repository.jpa.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.GrantedAuthority;

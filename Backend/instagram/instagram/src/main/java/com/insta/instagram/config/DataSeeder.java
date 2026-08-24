@@ -1,7 +1,7 @@
 package com.insta.instagram.config;
 
 import com.insta.instagram.modal.User;
-import com.insta.instagram.repository.UserRepository;
+import com.insta.instagram.repository.jpa.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;

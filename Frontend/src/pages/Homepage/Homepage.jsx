@@ -15,26 +15,48 @@ const Homepage = () => {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    if (!currentUser) return;
-    let cancelled = false;
-    fetchFeed()
-      .then((res) => {
-        if (cancelled) return;
-        const sorted = (res || [])
-          .map(normalizePost)
-          .sort((a, b) => {
-            if (!a.createdAt || !b.createdAt) return 0;
-            return new Date(b.createdAt) - new Date(a.createdAt);
+      if (!currentUser) return;
+
+      let cancelled = false;
+
+      fetchFeed()
+          .then((res) => {
+              if (cancelled) return;
+
+              console.log("RAW FEED RESPONSE:", res);
+
+              const sorted = (res || [])
+                  .map(normalizePost)
+                  .sort((a, b) => {
+                      if (!a.createdAt || !b.createdAt) return 0;
+                      return new Date(b.createdAt) - new Date(a.createdAt);
+                  });
+
+              console.log("NORMALIZED POSTS:", sorted);
+
+              setPosts(sorted);
+          })
+          .catch((err) => {
+              console.error("FETCH FEED ERROR:", err);
+              console.error("STATUS:", err.response?.status);
+              console.error("DATA:", err.response?.data);
+              console.error("MESSAGE:", err.message);
+
+              if (!cancelled) {
+                  setError(
+                      err.response?.data?.message ||
+                      err.message ||
+                      'Could not load feed'
+                  );
+              }
+          })
+          .finally(() => {
+              if (!cancelled) setLoading(false);
           });
-        setPosts(sorted);
-      })
-      .catch(() => {
-        if (!cancelled) setError('Could not load feed');
-      })
-      .finally(() => {
-        if (!cancelled) setLoading(false);
-      });
-    return () => { cancelled = true };
+
+      return () => {
+          cancelled = true;
+      };
   }, [currentUser]);
 
   if (!currentUser) return null;

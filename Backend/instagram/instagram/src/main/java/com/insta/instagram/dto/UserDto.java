@@ -1,5 +1,6 @@
 package com.insta.instagram.dto;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 
 import java.util.Objects;
@@ -9,6 +10,7 @@ public class UserDto {
     private String username;
     private String email;
     private String name;
+    @Column(columnDefinition = "LONGTEXT")
     private String userImage;
 public UserDto(){
 

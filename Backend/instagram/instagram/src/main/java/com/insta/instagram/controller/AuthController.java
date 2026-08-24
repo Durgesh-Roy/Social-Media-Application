@@ -2,7 +2,7 @@ package com.insta.instagram.controller;
 
 import com.insta.instagram.exceptions.UserException;
 import com.insta.instagram.modal.User;
-import com.insta.instagram.repository.UserRepository;
+import com.insta.instagram.repository.jpa.UserRepository;
 import com.insta.instagram.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
-
 @RestController
 public class AuthController {
     @Autowired

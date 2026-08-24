@@ -7,8 +7,8 @@ import com.insta.instagram.exceptions.UserException;
 import com.insta.instagram.modal.Comment;
 import com.insta.instagram.modal.Post;
 import com.insta.instagram.modal.User;
-import com.insta.instagram.repository.CommentsRepository;
-import com.insta.instagram.repository.PostRepository;
+import com.insta.instagram.repository.jpa.CommentsRepository;
+import com.insta.instagram.repository.jpa.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

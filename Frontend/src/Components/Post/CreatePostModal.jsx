@@ -80,8 +80,18 @@ const CreatePostModal = ({ onClose, isOpen }) => {
         setBusy(true)
         setError('')
         try {
-            const image = file ? await fileToDataUrl(file) : imageUrl.trim()
-            await createPost({ caption, image, location })
+           const image = file ? await fileToDataUrl(file) : imageUrl.trim();
+
+           console.log("Original file size:", file?.size);
+           console.log("Original file size KB:", file ? file.size / 1024 : 0);
+           console.log("Base64 length:", image?.length);
+           console.log("Base64 size KB:", image ? image.length / 1024 : 0);
+
+           await createPost({
+               caption,
+               image,
+               location
+           });
             handleClose()
             window.location.reload()
         } catch (err) {

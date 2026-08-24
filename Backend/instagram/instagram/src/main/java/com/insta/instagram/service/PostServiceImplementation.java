@@ -5,8 +5,8 @@ import com.insta.instagram.exceptions.PostException;
 import com.insta.instagram.exceptions.UserException;
 import com.insta.instagram.modal.Post;
 import com.insta.instagram.modal.User;
-import com.insta.instagram.repository.PostRepository;
-import com.insta.instagram.repository.UserRepository;
+import com.insta.instagram.repository.jpa.PostRepository;
+import com.insta.instagram.repository.jpa.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +31,7 @@ public class PostServiceImplementation implements PostService {
         if (opt.isPresent()) {
             return opt.get();
         }
-        throw  new PostException("Post not found with id " + postId);
+        throw new PostException("Post not found with id " + postId);
     }
 
     @Override
@@ -43,7 +43,8 @@ public class PostServiceImplementation implements PostService {
         userDto.setName(user.getName());
         userDto.setUserImage(user.getImage());
         userDto.setUsername(user.getUserName());
-
+        System.out.println(user.getImage().length());
+        System.out.println(user.getImage());
         post.setUser(userDto);
 
         Post createdPost=postRepository.save(post);
@@ -80,6 +81,7 @@ public class PostServiceImplementation implements PostService {
     @Override
     public List<Post> findAllPostsByUserIds(List<Integer> userIds) throws PostException {
         if (userIds == null || userIds.isEmpty()) {
+            System.out.println("userIds is null or empty");
             return java.util.Collections.emptyList();
         }
         return postRepository.findByUserIdIn(userIds);

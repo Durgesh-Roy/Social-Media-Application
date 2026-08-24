@@ -3,7 +3,9 @@ package com.insta.instagram.service;
 import com.insta.instagram.dto.UserDto;
 import com.insta.instagram.exceptions.UserException;
 import com.insta.instagram.modal.User;
-import com.insta.instagram.repository.UserRepository;
+//import com.insta.instagram.modal.UserDocument;
+import com.insta.instagram.repository.jpa.UserRepository;
+//import com.insta.instagram.repository.elasticsearch.UserSearchRepository;
 import com.insta.instagram.security.JwtTokenClaims;
 import com.insta.instagram.security.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,8 @@ public class UserServiceImplementation implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+//    @Autowired
+//    private UserSearchRepository userSearchRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -145,4 +149,16 @@ public class UserServiceImplementation implements UserService {
         dto.setUserImage(user.getImage());
         return dto;
     }
+//    private UserDocument mapToElasticDocument(User user) {
+//
+//        UserDocument document = new UserDocument();
+//
+//        document.setId(user.getId());
+//        document.setUserName(user.getUserName());
+//        document.setName(user.getName());
+//        document.setBio(user.getBio());
+//        document.setImage(user.getImage());
+//
+//        return document;
+//    }
 }

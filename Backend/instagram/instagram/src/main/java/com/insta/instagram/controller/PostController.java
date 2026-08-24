@@ -10,12 +10,9 @@ import com.insta.instagram.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.ArrayList;
 import java.util.List;
-
 @RestController
 @RequestMapping("api/posts")
 public class PostController {
@@ -27,16 +24,20 @@ public class PostController {
     @PostMapping("/create")
     public ResponseEntity<Post>createPostHandler(@RequestBody Post post,
                                                  @RequestHeader("Authorization") String token) throws UserException {
+
         User user=userService.findUserProfile(token);
         Post createdPost=postService.createPost(post,user.getId());
+
         return new ResponseEntity<>(createdPost, HttpStatus.OK);
     }
+
     @GetMapping("/following/{userId}")
     public ResponseEntity<List<Post>>findPostByUserIdHandler(@PathVariable Integer userId) throws PostException, UserException {
 
         List<Post>posts=postService.findPostsByUserId(userId);
         return new ResponseEntity<List<Post>>(posts,HttpStatus.OK);
     }
+
     @GetMapping("/all/{userIds}")
     public ResponseEntity<List<Post>>findAllPostsByUserIdsHandler(@PathVariable List<Integer> userIds) throws PostException, UserException {
 
@@ -51,6 +52,7 @@ public class PostController {
         ids.add(me.getId());
         List<Post> posts = postService.findAllPostsByUserIds(ids);
         System.out.println(posts+ " " + me.getId());
+        System.out.println("888888uyfghqwesrdtfyguhjklm;,.fgvbhjnkml,4576rtyfhgcnvb 8888888888");
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 
@@ -85,7 +87,7 @@ public class PostController {
         User user=userService.findUserProfile(token);
         String message=postService.deletePost(postId,user.getId());
         MessageResponse res=new MessageResponse(message);
-        return new ResponseEntity<>(res,HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(res,HttpStatus. ACCEPTED);
     }
     @PutMapping("/save_post/{postId}")
     public ResponseEntity<MessageResponse>savePostHandler(@PathVariable Integer postId

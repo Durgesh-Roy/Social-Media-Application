@@ -1,4 +1,4 @@
-package com.insta.instagram.repository;
+package com.insta.instagram.repository.jpa;
 
 import com.insta.instagram.modal.User;
 import org.springframework.data.jpa.repository.JpaRepository;
